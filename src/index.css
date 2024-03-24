@@ -1,0 +1,761 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection{
+  background-color: #1A76D1;
+  color: white;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+   scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.content-grid {
+  --padding-inline: 1rem;
+  --content-max-width: 1440px;
+  --breakout-max-width: 1920px;
+
+  --breakout-size: calc(
+    calc(var(--breakout-max-width) - var(--content-max-width)) / 2
+  );
+
+  display: grid;
+  grid-template-columns:
+    [full-width-start] minmax(var(--padding-inline), 1fr)
+    [breakout-start] minmax(0, var(--breakout-size))
+    [content-start] min(
+      100% - calc(var(--padding-inline) * 2),
+      var(--content-max-width)
+    )
+    [content-end]
+    minmax(0, var(--breakout-size)) [breakout-end]
+    minmax(var(--padding-inline), 1fr) [full-width-end];
+}
+
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+  grid-column: content;
+}
+
+.content-grid > .breakout {
+  grid-column: breakout;
+}
+
+.content-grid > .full-width {
+  grid-column: full-width;
+
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+img.full-width {
+  width: 100%;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+iframe{
+  width: 100%;
+  aspect-ratio:  16/9; 
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  z-index: 1000;
+  animation-name: nav ;
+  animation-timeline: scroll();
+}
+
+@keyframes nav {
+  0%,19%{
+    background-color: transparent;
+  }
+  20%,100%{
+    background-color: #1A76D1;
+
+  }
+}
+
+
+
+.logo img {
+  max-width: 80px;
+}
+
+
+.hero>.explore {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 80%;
+  left: 3%;
+}
+
+/* flag */
+
+.imgcontainer {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  z-index: 1001;
+
+  
+  width: clamp(12rem, 40%, 24rem);
+  height: clamp(150px, 15vh, 350px);
+}
+
+
+.imgcontainer>img {
+  border-radius: 10px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rotateX)) rotateY(var(--rotateY)) perspective(1000px);
+
+  aspect-ratio: 16/9;
+  object-fit: fill;
+  box-shadow: 0px 0px 50px 2px #FF9933;
+
+}
+
+
+.imgcontainer>.shadow{
+  content: "";
+  position: absolute;
+  border-radius: 10px;
+
+  width: 80%;
+  height: 100%;
+  margin-inline: auto;
+  
+  inset: -1rem;
+  transform: rotateX(var(--rotateX)) rotateY(var(--rotateY)) perspective(1000px) translateY(10%) translateZ(-40px);
+
+  background: black;
+}
+
+.imgcontainer>.bg{
+  position: absolute;
+  border-radius: 10px;
+  
+
+  width: 90%;
+  height: 120%;
+  margin-inline: auto;
+
+  inset: -1rem;
+  transform: rotateX(var(--rotateX)) rotateY(var(--rotateY)) perspective(1000px)  translateZ(-50px);
+
+  background-color: transparent;
+  background: linear-gradient(to bottom,#FF9933 0%,#fff 50%,#138808 100%) ;
+  
+}
+
+li>a{
+  font-size: clamp(2rem,5vw,4rem);
+  transition: filter 0.3s ease-in-out;
+}
+li>a:hover{
+  filter: drop-shadow(0 0 2rem white);
+}
+
+.menu{
+  --width:max(40vw,300px);
+  position: fixed;
+  width: var(--width);
+  top: 0;
+  left: 100%;
+  bottom: 0;
+  transition: transform 0.3s ease-in-out,
+  background-color 0.3s ease-in-out;
+}
+
+.masker{
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+  display: none;
+  transition: display,opacity 0.2s ease-in-out;
+}
+
+
+
+.menu.open{
+  transform: translateX(-100%);
+}
+
+.masker.open{
+  display: block;
+}
+
+.menu-toggle.open{
+  background-color: white;
+  transition: transform 0.3s ease-in-out;
+}
+.menu-toggle.open :where(.line1,.line2,.line3){
+  background-color: black;
+}
+
+
+.menu-toggle{
+  --height : 4px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(2*var(--height));
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+
+  cursor: pointer;
+  z-index: 1000;
+
+  border-radius: 50%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.menu-toggle:hover{
+  background-color: black;
+  transform: scale(1.1);
+}
+
+.menu-toggle.open:hover{
+  transform: scale(1.1);
+  background-color: white;
+}
+
+.line1,.line2,.line3{
+  width: 40px;
+  height: var(--height);
+  background-color: white;
+  border-radius: 100vw;
+  transition: transform 0.2s ease-in-out,opacity 0.1s ease-in-out,
+  background-color 0.3s ease-in-out;
+  
+}
+
+.menu-toggle.open .line1 {
+  transform: translateY(calc(3*var(--height))) rotate(45deg);
+ 
+}
+
+.menu-toggle.open .line2{
+  opacity: 0.1;
+  transform: translateX(50px) ;
+}
+
+.menu-toggle.open .line3 {
+  transform: translateY(calc(-3*var(--height))) rotate(-45deg);
+}
+
+.swiper {
+  width: min(100%,700px);
+  aspect-ratio: 1.5;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.swiper-slide:nth-child(1n) {
+  background-color: rgb(206, 17, 17);
+}
+.swiper-slide>img{
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.left p{
+  display: none;
+}
+
+.left .active_card{
+  display: block;
+}
+
+.active{
+  outline: 2px solid black;
+  transition: outline-offset 0.3s ease-in-out;
+
+}
+
+.active:hover{
+  outline-offset: -3px;
+}
+.layout-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(min(100%,400px),1fr));
+
+}
+
+.curve{
+  max-width: 7rem;
+  float: left;
+  margin-right:1rem; 
+  border-radius: 50%;
+  -webkit-shape-outside:circle();
+  shape-outside:circle();
+}
+
+.curve-rectangle{
+  max-width: 350px;
+  min-width: 250px;
+  float: left;
+  margin-right:1rem; 
+  -webkit-shape-outside: rectangle();
+  shape-outside:rectangle();
+}
+
+.hero{
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  isolation: isolate;
+}
+
+.hero>video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
+.card{
+  box-shadow: 0 0 0.25rem black;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover{
+  box-shadow: 0 0 1.5rem black;
+
+}
+
+@media screen and (max-width: 768px){
+  .imgcontainer{
+    display: none;
+  }
+
+  .grid-layout.grid-layout{
+    grid-template-columns: repeat(auto-fit,minmax(min(100%,300px),1fr));
+    gap: 1rem;
+  }
+
+  .grid-layout .TajMahal:hover,
+  .grid-layout .ChittorgarhFort:hover,
+  .grid-layout .HampiSculpture:hover,
+  .grid-layout .SunTemple:hover,
+  .grid-layout .ChhatrapatiShivajiMaharajTerminus:hover {
+    grid-template-columns: repeat(5, 1fr) !important; /* Override hover styles */
+  }
+
+  .grid-layout .TajMahal-span,
+  .grid-layout .TajMahal-button,
+  .grid-layout .ChittorgarhFort-span,
+  .grid-layout .ChittorgarhFort-button,
+  .grid-layout .HampiSculpture-span,
+  .grid-layout .HampiSculpture-button,
+  .grid-layout .SunTemple-span,
+  .grid-layout .SunTemple-button,
+  .grid-layout .ChhatrapatiShivajiMaharajTerminus-span,
+  .grid-layout .ChhatrapatiShivajiMaharajTerminus-button {
+    opacity: 1; /* Reset opacity to default value for small screens */
+  }
+  
+  
+}
+@media screen and (max-width: 500px){
+  .hero>video{
+    display: block;
+    object-fit: cover;
+    max-width: 100%;
+    height: 100vh;
+  }
+
+  
+}
+
+
+/* LOADER */
+
+.loader{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1001;
+}
+
+.purple{
+  position: fixed;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  place-items: center;
+
+}
+
+.hidden {
+  transform: translateY(-100vh);
+}
+
+.purple>h1{
+  
+  overflow: hidden;
+  position: relative;
+  font-size: clamp(3rem,5vw,5rem);
+  line-height: 1.2;
+
+ width: fit-content;
+  background: linear-gradient(to right, white,white ) no-repeat;
+  
+  color: rgba(128, 128, 128, 0.4);
+  -webkit-text-stroke: 2px black;
+  background-position-y: bottom;
+  background-clip: text;
+  background-size: 100% 100%;
+  transition: background-size cubic-bezier(.1, .5, .5, 1) 0.5s;
+
+  text-align: center;
+  -webkit-background-clip: text;
+  font-weight: 700;
+}
+
+/* Common styles for all screen sizes */
+.grid-layout {
+  height: fit-content;
+  transition: 500ms;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.grid-layout > * {
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: 300ms;
+}
+
+.TajMahal-span,
+.ChittorgarhFort-span,
+.HampiSculpture-span,
+.SunTemple-span,
+.ChhatrapatiShivajiMaharajTerminus-span {
+  background-color: black;
+  padding: 0.3rem 1.2rem;
+  border-radius: 0.25rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  opacity: 0;
+}
+
+/* Grid animations for larger screens */
+@media screen and (min-width: 768px) {
+  .grid-layout:has(.TajMahal:hover) {
+    grid-template-columns: 2fr 0.75fr 0.75fr 0.75fr 0.75fr;
+  }
+
+  .grid-layout:has(.ChittorgarhFort:hover) {
+    grid-template-columns: 0.75fr 2fr 0.75fr 0.75fr 0.75fr;
+  }
+
+  .grid-layout:has(.HampiSculpture:hover) {
+    grid-template-columns: 0.75fr 0.75fr 2fr 0.75fr 0.75fr;
+  }
+
+  .grid-layout:has(.SunTemple:hover) {
+    grid-template-columns: 0.75fr 0.75fr 0.75fr 2fr 0.75fr;
+  }
+
+  .grid-layout:has(.ChhatrapatiShivajiMaharajTerminus:hover) {
+    grid-template-columns: 0.75fr 0.75fr 0.75fr 0.75fr 2fr;
+  }
+
+  .grid-layout:has(.TajMahal:hover) .TajMahal-span,
+  .grid-layout:has(.ChittorgarhFort:hover) .ChittorgarhFort-span,
+  .grid-layout:has(.HampiSculpture:hover) .HampiSculpture-span,
+  .grid-layout:has(.SunTemple:hover) .SunTemple-span,
+  .grid-layout:has(.ChhatrapatiShivajiMaharajTerminus:hover) .ChhatrapatiShivajiMaharajTerminus-span,
+  .grid-layout:has(.TajMahal:hover) .TajMahal-button,
+  .grid-layout:has(.ChittorgarhFort:hover) .ChittorgarhFort-button,
+  .grid-layout:has(.HampiSculpture:hover) .HampiSculpture-button,
+  .grid-layout:has(.SunTemple:hover) .SunTemple-button,
+  .grid-layout:has(.ChhatrapatiShivajiMaharajTerminus:hover) .ChhatrapatiShivajiMaharajTerminus-button {
+    opacity: 1;
+  }
+
+  .ChittorgarhFort-button,
+  .ChhatrapatiShivajiMaharajTerminus-button,
+  .SunTemple-button,
+  .HampiSculpture-button,
+  .TajMahal-button {
+    opacity: 0;
+  }
+}
+
+/* Disable animations for smaller screens */
+@media screen and (max-width: 767px) {
+  .grid-layout,
+  .grid-layout > *,
+  .TajMahal-span,
+  .ChittorgarhFort-span,
+  .HampiSculpture-span,
+  .SunTemple-span,
+  .ChhatrapatiShivajiMaharajTerminus-span,
+  .TajMahal-button,
+  .ChittorgarhFort-button,
+  .HampiSculpture-button,
+  .SunTemple-button,
+  .ChhatrapatiShivajiMaharajTerminus-button {
+    transition: none;
+  }
+}
+
+.page-link{
+  transition: background-color,color  0.3s ease-in-out;
+}
+
+.page-link:hover{
+  background-color: black;
+  color: white;
+
+}
+
+.wrapper{
+  background-color: black;
+  border-radius: 0.25rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.wrapper:hover{
+
+  transform: scale(1.1);
+}
+
+.feature-map{
+  min-height: 100vh;
+  display: grid;
+  gap: 1rem;
+  padding: 3rem 0rem;
+  place-items: center;
+}
+
+.feature-map>h1{
+  font-size: clamp(2rem,4vw,5rem);
+  text-transform: uppercase;
+}
+.feature-map>h2{
+  font-size: clamp(1.5rem,4vw,2.5rem);
+  text-align: center;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.progress-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 0.5rem;
+  background-color: #1A76D1;
+  mix-blend-mode: difference;
+  z-index: 1010;
+  transform-origin: right;
+  animation-name: progress;
+  animation-timeline: scroll();
+}
+
+@keyframes progress {
+  0% {width: 0;}
+  100%{width: 100%;}
+  
+}
+
+.grids{
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit,minmax(min(350px,100%),1fr));
+  gap: 1rem;
+}
+
+
+/* cards */
+
+.grandparent {
+  place-self: center;
+  max-width: 300px;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid transparent;
+}
+
+.grandparent a {
+  text-decoration: none
+}
+
+.content {
+  padding: 1.1rem;
+}
+
+.grandparent img {
+  object-fit: cover;
+  width: 100%;
+  height: 150px;
+  background-color: rgb(239, 205, 255);
+}
+
+.title {
+  color: #111827;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+.desc {
+  margin-top: 0.5rem;
+  color: #6B7280;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.action {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: #2563EB;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.action span {
+  transition: .3s ease;
+}
+
+.action:hover span {
+  transform: translateX(4px);
+}
+
